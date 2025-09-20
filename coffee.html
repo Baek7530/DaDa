@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee & Bread</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* 이미지가 화면 밖으로 넘어가지 않도록 */
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('coffee.png'); /* 이미지 URL을 여기에 넣어주세요. */
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .title {
+            font-size: 3em;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        .reservation-button {
+            background-color: white;
+            color: #333;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            align-self: flex-end; /* 오른쪽 하단으로 정렬 */
+            margin-bottom: 20px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <div class="title">coffee & bread</div>
+        <a href="tel:010-1234-5678" class="reservation-button">예약</a>
+    </div>
+</body>
+</html>
