@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024년 1월 월간 마케팅 성과 대시보드</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #1e3a8a; /* 짙은 파란색 */
+            border-bottom: 3px solid #60a5fa; /* 연한 파란색 밑줄 */
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        /* KPI 카드 스타일 */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .kpi-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .kpi-card h3 {
+            margin-top: 0;
+            font-size: 1em;
+            color: #64748b;
+        }
+        .kpi-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #1d4ed8;
+            margin: 5px 0;
+        }
+        .kpi-unit {
+            font-size: 0.9em;
+            color: #94a3b8;
+        }
+        .positive { color: #10b981; } /* 녹색 */
+        .negative { color: #ef4444; } /* 빨간색 */
+
+        /* 섹션 스타일 */
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            border-left: 5px solid #60a5fa;
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* 테이블 스타일 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .data-table th {
+            background-color: #eff6ff; /* 연한 파란 배경 */
+            color: #1e3a8a;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .data-table tr:hover {
+            background-color: #f7f9fc;
+        }
+
+        /* 개선 제언 스타일 */
+        .action-list {
+            list-style: none;
+            padding: 0;
+        }
+        .action-list li {
+            background-color: #e0f2f1; /* 민트색 배경 */
+            color: #064e3b;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #0d9488;
+            font-weight: 500;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 2024년 1월 월간 마케팅 성과 대시보드</h1>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <h3>총 방문자 수 (Users)</h3>
+                <div class="kpi-value">86,634</div>
+                <div class="kpi-unit">명</div>
+            </div>
+            <div class="kpi-card">
+                <h3>총 매출 (Revenue)</h3>
+                <div class="kpi-value">6.8억</div>
+                <div class="kpi-unit">원 (680,810,039원)</div>
+            </div>
+            <div class="kpi-card">
+                <h3>평균 전환율 (CR)</h3>
+                <div class="kpi-value positive">5.08%</div>
+                <div class="kpi-unit">변동성 매우 큼</div>
+            </div>
+            <div class="kpi-card">
+                <h3>평균 CAC</h3>
+                <div class="kpi-value negative">34,167</div>
+                <div class="kpi-unit">원 (평균 비용)</div>
+            </div>
+            <div class="kpi-card">
+                <h3>평균 고객 유지율 (Retention)</h3>
+                <div class="kpi-value positive">60.34%</div>
+                <div class="kpi-unit">견고한 유지 성과</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 성과 추이 분석 (Visualization Placeholder)</h2>
+            <p>
+                <em>(실제 웹 개발 시 이 영역에는 D3.js, Chart.js, Google Charts 등을 활용하여 일별 **매출, 방문자 수, 전환율**의 추이를 보여주는 라인 차트가 삽입됩니다.)</em>
+            </p>
+            <div style="height: 250px; background-color: #f0f4f8; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #64748b;">
+                **[매출/전환율 일별 추이 그래프 영역]**
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💡 개선을 위한 핵심 제언</h2>
+            <ul class="action-list">
+                <li>**전환율 안정화:** A/B 테스트를 통해 랜딩 페이지 최적화를 실행하고, 고전환일(1월 29일)의 성공 요인을 분석해 상시 적용합니다.</li>
+                <li>**마케팅 효율 개선:** CAC가 높았던 기간(1월 10일 최고)의 광고 매체 및 캠페인 지표를 상세 분석하여 비효율적 예산 집행을 중단해야 합니다.</li>
+                <li>**장기 고객 가치 증대:** 유지율이 낮았던 날(1월 2일 최저)의 고객 이탈 원인을 분석하여, 개인화된 리텐션 캠페인(이메일, 할인 등)을 도입합니다.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📋 상세 일별 지표</h2>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>방문자 수</th>
+                            <th>회원 가입 수</th>
+                            <th>전환 수</th>
+                            <th>매출 (원)</th>
+                            <th>CAC (원)</th>
+                            <th>고객 유지율 (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2024-01-01</td><td>1,394</td><td>410</td><td>27</td><td>24,196,181</td><td>47,747</td><td>67.01</td></tr>
+                        <tr><td>2024-01-02</td><td>4,661</td><td>229</td><td>139</td><td>44,513,052</td><td>35,081</td><td>35.79</td></tr>
+                        <tr><td>2024-01-03</td><td>1,947</td><td>52</td><td>175</td><td>8,204,919</td><td>12,392</td><td>42.73</td></tr>
+                        <tr><td>2024-01-04</td><td>2,758</td><td>300</td><td>31</td><td>36,308,989</td><td>11,507</td><td>79.48</td></tr>
+                        <tr><td>2024-01-05</td><td>3,104</td><td>176</td><td>43</td><td>34,759,428</td><td>48,319</td><td>56.63</td></tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
