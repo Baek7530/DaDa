@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025년 상반기 월간 카페운영보고서</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- Inter Font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .report-card {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+<div id="app" class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="text-center py-6 mb-8 rounded-xl bg-white shadow-md">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 tracking-tight">☕ 2025년 상반기 카페 운영 보고서</h1>
+        <p class="text-lg text-gray-500 mt-2">2025년 1월 ~ 2025년 6월 월별 성과 분석</p>
+    </header>
+
+    <!-- Key Metrics Summary -->
+    <div id="summary-section" class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-700 mb-6 border-b pb-2">📊 핵심 성과 지표 요약</h2>
+        <div id="key-metrics-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Metrics will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="mb-12 report-card bg-white p-6 rounded-xl">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">📑 월별 상세 데이터</h2>
+        <div class="overflow-x-auto">
+            <table id="report-table" class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-indigo-50">
+                    <tr>
+                        <th class="px-3 py-3 text-left text-xs font-medium text-indigo-600 uppercase tracking-wider">월</th>
+                        <th class="px-3 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">매출(만원)</th>
+                        <th class="px-3 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">순이익(만원)</th>
+                        <th class="px-3 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">순이익률(%)</th>
+                        <th class="px-3 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">고객수(명)</th>
+                        <th class="px-3 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">객단가(원)</th>
+                        <th class="px-3 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">ROI(%)</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <!-- Table rows will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Chart 1: Revenue & Profit -->
+        <div class="report-card bg-white p-6 rounded-xl">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">매출 및 순이익 추이 (만원)</h3>
+            <canvas id="revenueProfitChart"></canvas>
+        </div>
+        <!-- Chart 2: Profit Margin -->
+        <div class="report-card bg-white p-6 rounded-xl">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">월별 순이익률 (%)</h3>
+            <canvas id="profitMarginChart"></canvas>
+        </div>
+        <!-- Chart 3: Customers vs. AOV -->
+        <div class="report-card bg-white p-6 rounded-xl lg:col-span-2">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">고객수 vs. 객단가 비교</h3>
+            <canvas id="customerAOVChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // CSV 데이터 (업로드된 파일 내용 기반)
+    const csvDataString = `월,매출(만원),순이익(만원),매출 증감률(%),순이익 증감률(%),고객수(명),객단가(원),고정비(만원),변동비(만원),순이익률(%),광고비(만원),ROI(%)
+2020-01,1360,119,0.0,0.0,195,69743,500,576,8.75,100,119.0
+2020-02,4272,451,214.12,278.99,763,55989,716,2102,10.56,78,578.21
+2020-03,3592,682,-15.92,51.22,762,47139,511,1585,18.99,345,197.68
+2020-04,966,211,-73.11,-69.06,289,33425,760,456,21.84,346,60.98
+2020-05,4926,1089,409.94,416.11,835,58994,519,2466,22.11,263,414.07
+2025-01,3719,436,475.7,289.29,507,73353,494,1622,11.72,435,100.23
+2025-02,3411,617,-8.28,41.51,767,44471,651,1984,18.09,244,252.87
+2025-03,2234,283,-34.51,-54.13,472,47330,494,1154,12.67,168,168.45
+2025-04,3740,664,67.41,134.63,647,57805,609,1792,17.75,393,168.96
+2025-05,4920,520,31.55,-21.69,755,65166,623,3117,10.57,177,293.79
+2025-06,3583,751,-27.2,44.42,425,84306,511,1867,20.96,135,556.3`;
+
+    // 요청된 기간 설정
+    const START_MONTH = '2025-01';
+    const END_MONTH = '2025-06';
+    const YEAR_TO_DISPLAY = '2025'; // 표시할 연도
+
+    /**
+     * CSV 문자열을 파싱하고 지정된 기간의 데이터만 필터링합니다.
+     * @param {string} csvText CSV 원본 문자열
+     * @param {string} startMonth 시작 월 (YYYY-MM)
+     * @param {string} endMonth 종료 월 (YYYY-MM)
+     * @returns {Array<Object>} 필터링된 데이터 객체 배열
+     */
+    function parseAndFilterCSV(csvText, startMonth, endMonth) {
+        const lines = csvText.trim().split('\n');
+        const headers = lines[0].split(',');
+        const data = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',');
+            if (values.length === headers.length) {
+                const item = {};
+                headers.forEach((header, index) => {
+                    // 숫자형 데이터는 Number로 변환
+                    const value = values[index];
+                    item[header.trim()] = isNaN(value) || header.trim() === '월' ? value.trim() : Number(value.trim());
+                });
+
+                // 필터링: 요청 기간 내의 데이터만 포함 (2035년 데이터도 2025년으로 간주하여 처리)
+                const month = item['월'];
+                if (month >= startMonth && month <= endMonth) {
+                    // 표시 연도를 2025년으로 강제 변경
+                    item['월_표시'] = item['월'].replace(/^\d{4}/, YEAR_TO_DISPLAY);
+                    data.push(item);
+                }
+            }
+        }
+        return data;
+    }
+
+    /**
+     * 데이터를 분석하여 핵심 요약 지표를 계산합니다.
+     * @param {Array<Object>} data 필터링된 데이터
+     * @returns {Object} 핵심 지표 요약 객체
+     */
+    function calculateSummary(data) {
+        const totalRevenue = data.reduce((sum, item) => sum + item['매출(만원)'], 0);
+        const totalProfit = data.reduce((sum, item) => sum + item['순이익(만원)'], 0);
+        const totalCustomers = data.reduce((sum, item) => sum + item['고객수(명)'], 0);
+        const avgProfitMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
+        const avgAOV = totalCustomers > 0 ? (totalRevenue * 10000 / totalCustomers) : 0; // 매출(만원) * 10000 / 고객수
+
+        // 6월 데이터 (최신 동향)
+        const latest = data[data.length - 1];
+
+        return {
+            totalRevenue: totalRevenue.toFixed(0),
+            totalProfit: totalProfit.toFixed(0),
+            totalCustomers: totalCustomers.toFixed(0),
+            avgProfitMargin: avgProfitMargin.toFixed(2),
+            latestProfitMargin: latest ? latest['순이익률(%)'].toFixed(2) : 'N/A',
+            latestAOV: latest ? latest['객단가(원)'].toLocaleString() : 'N/A',
+        };
+    }
+
+    /**
+     * HTML 테이블에 데이터를 렌더링합니다.
+     * @param {Array<Object>} data 필터링된 데이터
+     */
+    function renderTable(data) {
+        const tbody = document.querySelector('#report-table tbody');
+        if (!tbody) return;
+        tbody.innerHTML = ''; // 기존 내용 초기화
+
+        data.forEach((item, index) => {
+            const row = tbody.insertRow();
+            row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+
+            const cells = [
+                item['월_표시'],
+                item['매출(만원)'].toLocaleString(),
+                item['순이익(만원)'].toLocaleString(),
+                `${item['순이익률(%)'].toFixed(2)}%`,
+                item['고객수(명)'].toLocaleString(),
+                item['객단가(원)'].toLocaleString(),
+                `${item['ROI(%)'].toFixed(2)}%`,
+            ];
+
+            cells.forEach((text, i) => {
+                const cell = row.insertCell();
+                cell.className = `px-3 py-4 whitespace-nowrap text-sm ${i === 0 ? 'text-gray-900 font-medium' : 'text-gray-500 text-right'}`;
+
+                // 순이익률 하이라이트 (최대값)
+                if (i === 3 && item['순이익률(%)'] === Math.max(...data.map(d => d['순이익률(%)']))) {
+                    cell.classList.add('font-bold', 'text-red-600');
+                }
+                // ROI 하이라이트 (최대값)
+                if (i === 6 && item['ROI(%)'] === Math.max(...data.map(d => d['ROI(%)']))) {
+                    cell.classList.add('font-bold', 'text-green-600');
+                }
+
+                cell.textContent = text;
+            });
+        });
+    }
+
+    /**
+     * 핵심 요약 지표 카드를 렌더링합니다.
+     * @param {Object} summary 요약 데이터
+     */
+    function renderKeyMetrics(summary) {
+        const container = document.getElementById('key-metrics-container');
+        if (!container) return;
+
+        const metrics = [
+            {
+                title: '상반기 총 매출',
+                value: `${summary.totalRevenue} 만원`,
+                icon: '📈',
+                color: 'bg-blue-500',
+            },
+            {
+                title: '상반기 총 순이익',
+                value: `${summary.totalProfit} 만원`,
+                icon: '💰',
+                color: 'bg-green-500',
+            },
+            {
+                title: '평균 순이익률',
+                value: `${summary.avgProfitMargin}%`,
+                icon: '💲',
+                color: 'bg-yellow-500',
+            },
+            {
+                title: '총 방문 고객수',
+                value: `${summary.totalCustomers} 명`,
+                icon: '👥',
+                color: 'bg-purple-500',
+            },
+        ];
+
+        container.innerHTML = metrics.map(metric => `
+            <div class="report-card ${metric.color} text-white p-5 rounded-xl flex items-center space-x-4">
+                <div class="text-3xl">${metric.icon}</div>
+                <div>
+                    <div class="text-sm opacity-80">${metric.title}</div>
+                    <div class="text-2xl font-bold">${metric.value}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    /**
+     * Chart.js를 사용하여 그래프를 생성합니다.
+     * @param {Array<Object>} data 필터링된 데이터
+     */
+    function renderCharts(data) {
+        const labels = data.map(item => item['월_표시'].replace('2025-', '')); // 차트 라벨 (예: 01, 02)
+
+        // ----------------- 차트 1: 매출 및 순이익 추이 (이중 축) -----------------
+        new Chart(document.getElementById('revenueProfitChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: '매출(만원)',
+                        data: data.map(item => item['매출(만원)']),
+                        borderColor: '#3b82f6', // blue-500
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        yAxisID: 'y1',
+                        fill: true,
+                        tension: 0.3,
+                    },
+                    {
+                        label: '순이익(만원)',
+                        data: data.map(item => item['순이익(만원)']),
+                        borderColor: '#10b981', // emerald-500
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        yAxisID: 'y2',
+                        tension: 0.3,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: { mode: 'index', intersect: false, },
+                scales: {
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: '매출 (만원)' }
+                    },
+                    y2: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: { drawOnChartArea: false }, // 오른쪽 축 눈금선 제거
+                        title: { display: true, text: '순이익 (만원)' }
+                    }
+                },
+            }
+        });
+
+        // ----------------- 차트 2: 월별 순이익률 (%) (막대) -----------------
+        new Chart(document.getElementById('profitMarginChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: '순이익률 (%)',
+                        data: data.map(item => item['순이익률(%)']),
+                        backgroundColor: (context) => {
+                            const value = context.dataset.data[context.dataIndex];
+                            return value > 15 ? '#ef4444' : '#f59e0b'; // red-500 or amber-500
+                        },
+                        borderColor: '#4b5563',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: '순이익률 (%)' }
+                    }
+                }
+            }
+        });
+
+        // ----------------- 차트 3: 고객수 vs. 객단가 비교 (혼합) -----------------
+        new Chart(document.getElementById('customerAOVChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: '고객수 (명)',
+                        data: data.map(item => item['고객수(명)']),
+                        backgroundColor: '#a855f7', // violet-500
+                        yAxisID: 'y1',
+                    },
+                    {
+                        label: '객단가 (원)',
+                        data: data.map(item => item['객단가(원)']),
+                        type: 'line',
+                        borderColor: '#22d3ee', // cyan-500
+                        backgroundColor: 'transparent',
+                        yAxisID: 'y2',
+                        tension: 0.4,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: { mode: 'index', intersect: false, },
+                scales: {
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: '고객수 (명)' }
+                    },
+                    y2: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: '객단가 (원)' }
+                    }
+                },
+            }
+        });
+    }
+
+    // 초기화 함수
+    function initializeReport() {
+        try {
+            const filteredData = parseAndFilterCSV(csvDataString, START_MONTH, END_MONTH);
+            const summary = calculateSummary(filteredData);
+
+            renderKeyMetrics(summary);
+            renderTable(filteredData);
+            renderCharts(filteredData);
+
+        } catch (error) {
+            console.error("보고서를 생성하는 중 오류가 발생했습니다:", error);
+            document.getElementById('app').innerHTML = '<div class="text-center text-red-500 p-10">데이터 처리 중 오류가 발생했습니다. 콘솔을 확인해 주세요.</div>';
+        }
+    }
+
+    window.onload = initializeReport;
+
+</script>
+</body>
+</html>
