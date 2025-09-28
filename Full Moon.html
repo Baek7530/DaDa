@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>즐거운 한가위 인사</title>
+    <style>
+        /* 페이지 전체 배경 스타일: 이미지의 밤하늘 색상과 유사하게 설정 */
+        body {
+            background-color: #1a233b; 
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* 화면 높이 전체를 차지하도록 설정 */
+        }
+        
+        /* 카드(이미지) 컨테이너 스타일 */
+        .greeting-card {
+            width: 90%;
+            max-width: 450px; /* 이미지 크기를 적당한 포스터/카드 크기로 제한 */
+            border-radius: 5px;
+            overflow: hidden;
+            /* 보름달처럼 은은하게 빛나는 느낌의 그림자 효과 추가 */
+            box-shadow: 0 0 40px rgba(255, 165, 0, 0.4); 
+        }
+
+        /* 이미지 스타일 */
+        .greeting-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        
+        /* 화면이 작을 경우 (주로 모바일 환경) 상단에 맞추도록 조정 */
+        @media (max-height: 600px) {
+            body {
+                padding: 20px 0;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="greeting-card">
+        <img src="Full%20Moon.png" alt="보름달과 함께 즐거운 한가위 되세요라는 문구가 있는 이미지">
+    </div>
+</body>
+</html>
