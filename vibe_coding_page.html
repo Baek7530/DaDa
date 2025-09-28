@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vibe Coding</title>
+  <style>
+    :root{
+      --bg1:#eef3ff; --bg2:#f8f9ff;
+      --ink:#111827; --muted:#6b7280;
+      --accent:#7c3aed; --accent2:#06b6d4;
+      --card:#ffffff; --border:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',Arial,sans-serif; color:var(--ink); background:linear-gradient(180deg,var(--bg1),var(--bg2));}
+    .wrap{max-width:960px; margin:0 auto; padding:20px}
+    header{padding:18px 12px 8px; text-align:center}
+    h1{margin:0; font-size:40px; letter-spacing:.5px}
+    .lead{margin:10px auto 0; max-width:720px; color:#7a3e8f; font-weight:600; font-size:20px}
+    .sub{margin:8px auto 18px; max-width:720px; color:#5b5f67}
+    .grid{display:grid; grid-template-columns:1fr; gap:16px}
+    @media (min-width:800px){
+      .grid{grid-template-columns:1.15fr .85fr;}
+    }
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,.06); overflow:hidden}
+    .imgbox{position:relative; overflow:hidden}
+    .imgbox::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(120% 80% at 10% 10%, rgba(124,58,237,.16) 0%, transparent 40%),
+                  radial-gradient(120% 100% at 90% 90%, rgba(6,182,212,.16) 0%, transparent 45%);
+      pointer-events:none;
+    }
+    .hero{
+      width:100%; height:100%; display:block; object-fit:cover;
+      /* 부드럽게 다듬기 */
+      image-rendering:auto;
+      filter: contrast(1.05) saturate(1.08) brightness(1.02);
+      transform: scale(1.01);
+      transition: transform .6s ease, filter .6s ease;
+      border-radius: 14px;
+    }
+    .imgpad{padding:14px}
+    .imgbox:hover .hero{transform:scale(1.03); filter:contrast(1.08) saturate(1.12) brightness(1.03)}
+    .info{padding:18px}
+    .bullet{color:var(--muted); line-height:1.7}
+    .cta{display:flex; justify-content:center; margin:18px 0}
+    .btn{
+      appearance:none; border:none; background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff; font-weight:700; padding:14px 22px; border-radius:999px; cursor:pointer;
+      box-shadow:0 10px 20px rgba(124,58,237,.25);
+      transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn:active{transform:translateY(1px); box-shadow:0 6px 14px rgba(124,58,237,.25)}
+    .footnote{color:var(--muted); text-align:center; font-size:13px; margin-top:10px}
+    .thank{display:flex; align-items:center; justify-content:center; height:100%; text-align:center; padding:16px}
+    .thank .box{background:rgba(124,58,237,.06); border:1px dashed rgba(124,58,237,.35); border-radius:12px; padding:18px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Vibe Coding</h1>
+      <div class="lead">40시간 투자하면 이만큼 할 수 있습니다.</div>
+      <div class="sub">알차게.. 재밌게.. 보람차게..</div>
+    </header>
+
+    <section class="grid">
+      <!-- 이미지 카드 -->
+      <article class="card imgpad">
+        <div class="imgbox">
+          <img class="hero" src="Vibe Coding Learning.png" alt="Vibe Coding 학습 일러스트">
+        </div>
+        <div class="info">
+          <ul class="bullet">
+            <li>* 수업 기간: 2025년 9월 6일(토) ~ 9월 28일(일)</li>
+            <li>* 수업 시간: 주말 9시~14시 (총 40H)</li>
+          </ul>
+          <div class="cta">
+            <button id="msgBtn" class="btn" type="button">메세지 클릭!!</button>
+          </div>
+          <p class="footnote">버튼을 누르면 안내 페이지로 이동합니다.</p>
+        </div>
+      </article>
+
+      <!-- 감사 카드 -->
+      <aside class="card thank">
+        <div class="box">
+          <p>그 동안 수고 많으셨습니다.<br/>감사합니다.</p>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    document.getElementById('msgBtn').addEventListener('click', () => {
+      window.location.href = 'https://baek7530.github.io/DaDa/Full Moon.html';
+    });
+  </script>
+</body>
+</html>
